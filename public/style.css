@@ -1,0 +1,421 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Bebas+Neue&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --yellow: #ffe135;
+    --border: 3px solid #0a0a0a;
+    --shadow: 5px 5px 0px #0a0a0a;
+}
+
+html, body { height: 100%; }
+
+body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+    transition: background 0.4s;
+}
+
+body.state-night    { background: #111; color: var(--white); }
+body.state-low      { background: #c8f5a0; }
+body.state-moderate { background: var(--yellow); }
+body.state-high     { background: #ff6b35; }
+body.state-extreme  { background: #e01e37; color: var(--white); }
+
+.page {
+    width: 100%;
+    max-width: 480px;
+}
+
+/* Header */
+.header {
+    border: var(--border);
+    background: var(--black);
+    color: var(--white);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+}
+
+.stats-link {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    background: var(--yellow);
+    border: var(--border);
+    padding: 0.5rem 0.9rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.1s, box-shadow 0.1s;
+    white-space: nowrap;
+}
+
+.stats-link:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--black); }
+.stats-link:active { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--black); }
+
+/* Button */
+.check-btn {
+    width: 100%;
+    padding: 1.25rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    background: var(--yellow);
+    color: var(--black);
+    border: var(--border);
+    border-top: none;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform 0.1s, box-shadow 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.check-btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--black); }
+.check-btn:active { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--black); }
+.check-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: var(--shadow); }
+
+.spinner {
+    width: 16px; height: 16px;
+    border: 3px solid var(--black);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: none;
+}
+.check-btn.loading .spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Card */
+.card {
+    border: var(--border);
+    border-top: none;
+    background: var(--white);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s, transform 0.4s;
+}
+.card.hidden { display: none; }
+.card.visible { opacity: 1; transform: translateY(0); }
+
+/* UV Hero */
+.uv-hero {
+    padding: 2rem 1.5rem 1.5rem;
+    border-bottom: var(--border);
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.uv-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 8rem;
+    line-height: 1;
+    transition: color 0.3s;
+}
+
+.uv-meta { padding-bottom: 0.5rem; }
+
+.uv-meta .tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--white);
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.uv-meta .level-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+/* Message banner */
+.message-banner {
+    padding: 1rem 1.5rem;
+    background: var(--black);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-bottom: var(--border);
+}
+
+/* UV Bar */
+.bar-section {
+    padding: 1.25rem 1.5rem;
+    border-bottom: var(--border);
+}
+
+.bar-track {
+    height: 18px;
+    background: var(--white);
+    border: var(--border);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--black);
+    transition: width 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+
+.bar-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* Info rows */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.5rem;
+    border-bottom: var(--border);
+}
+.info-row:last-child { border-bottom: none; }
+
+.info-row .label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.info-row .value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+}
+
+/* Night mode overrides */
+body.state-night .card           { background: #1a1a1a; border-color: #333; }
+body.state-night .uv-hero        { border-color: #333; }
+body.state-night .bar-section    { border-color: #333; }
+body.state-night .bar-track      { border-color: #333; background: #222; }
+body.state-night .bar-fill       { background: var(--yellow); }
+body.state-night .info-row       { border-color: #333; }
+body.state-night .uv-meta .tag   { background: var(--yellow); color: var(--black); }
+body.state-night .message-banner { background: var(--yellow); color: var(--black); border-color: #333; }
+body.state-night .check-btn      { border-color: #333; }
+body.state-night .header         { border-color: #333; }
+
+/* Stats page */
+.stats-page { width: 100%; max-width: 480px; }
+
+.stats-header {
+    background: var(--black);
+    color: var(--white);
+    border: var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stats-header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem;
+    line-height: 1;
+}
+
+.back-link {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    background: var(--yellow);
+    border: var(--border);
+    padding: 0.5rem 0.9rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.back-link:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--black); }
+.back-link:active { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--black); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; }
+
+.stat-block {
+    background: var(--white);
+    border: var(--border);
+    border-top: none;
+    padding: 1.5rem;
+}
+.stat-block:nth-child(2) { border-left: none; }
+
+.stat-block .label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 0.5rem;
+}
+
+.stat-block .value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+}
+
+/* ── Background SVG pattern ── */
+.bg-svg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    color: var(--black);
+    transition: opacity 0.4s;
+}
+
+body.state-night .bg-svg    { color: #fff; opacity: 0.4; }
+body.state-moderate .bg-svg { color: var(--black); opacity: 0.12; }
+body.state-high .bg-svg     { color: var(--black); opacity: 0.15; }
+body.state-extreme .bg-svg  { color: #fff; opacity: 0.2; }
+
+/* ── Decorative elements ── */
+.deco {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.deco-sun {
+    font-size: 10rem;
+    top: 5vh;
+    right: 6vw;
+    opacity: 0.12;
+    line-height: 1;
+    animation: slowspin 30s linear infinite;
+    font-family: sans-serif;
+    transition: opacity 0.4s;
+}
+
+body.state-night .deco-sun    { opacity: 0.06; }
+body.state-moderate .deco-sun { opacity: 0.22; }
+body.state-high .deco-sun     { opacity: 0.25; }
+body.state-extreme .deco-sun  { opacity: 0.2; }
+
+@keyframes slowspin { to { transform: rotate(360deg); } }
+
+.deco-box-a {
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--black);
+    bottom: 12vh;
+    left: 5vw;
+    opacity: 0.1;
+    transform: rotate(15deg);
+}
+
+.deco-box-b {
+    width: 60px;
+    height: 60px;
+    background: var(--yellow);
+    border: 3px solid var(--black);
+    top: 15vh;
+    left: 8vw;
+    opacity: 0.35;
+    transform: rotate(-8deg);
+    box-shadow: 4px 4px 0 var(--black);
+}
+
+body.state-night .deco-box-b    { opacity: 0.15; }
+body.state-moderate .deco-box-b { background: var(--black); }
+body.state-high .deco-box-b     { background: var(--black); opacity: 0.2; }
+
+.deco-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    padding: 0.4rem 0.8rem;
+    bottom: 18vh;
+    right: 5vw;
+    opacity: 0.2;
+    transform: rotate(-6deg);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+}
+
+body.state-night .deco-tag { background: var(--yellow); color: var(--black); opacity: 0.15; }
+
+.deco-circle {
+    width: 180px;
+    height: 180px;
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    bottom: 5vh;
+    right: 3vw;
+    opacity: 0.07;
+}
+
+.deco-uv-text {
+    font-size: 16rem;
+    line-height: 1;
+    color: var(--black);
+    opacity: 0.04;
+    bottom: -2vh;
+    left: -1vw;
+    letter-spacing: -0.05em;
+    transition: opacity 0.4s;
+}
+
+body.state-night .deco-uv-text   { color: #fff; opacity: 0.04; }
+body.state-moderate .deco-uv-text { opacity: 0.06; }
+body.state-extreme .deco-uv-text  { color: #fff; opacity: 0.06; }
+
+/* Ensure page content sits above bg */
+.page { position: relative; z-index: 1; }
+
+@media (max-width: 480px) {
+    .header h1 { font-size: 2.2rem; }
+    .uv-number { font-size: 5.5rem; }
+    .stat-block .value { font-size: 3rem; }
+    .deco-sun { font-size: 6rem; right: 2vw; }
+    .deco-uv-text { font-size: 10rem; }
+    .deco-box-a { width: 80px; height: 80px; }
+    .deco-circle { width: 120px; height: 120px; }
+}
+
+body.state-very-high {
+    background: #ff8c42;
+}

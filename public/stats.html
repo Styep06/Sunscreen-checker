@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats — Sunscreen Checker</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Stats page overrides: full invert ── */
+        body.stats-body {
+            background: #0a0a0a;
+            color: #f5f0e8;
+        }
+
+        /* Dot grid in yellow on black */
+        body.stats-body .bg-svg { color: #ffe135; opacity: 0.12; }
+
+        /* Decorative elements adapted for dark */
+        body.stats-body .sdeco-cross::before,
+        body.stats-body .sdeco-cross::after { background: #ffe135; }
+
+        .stats-page { position: relative; z-index: 1; width: 100%; max-width: 520px; }
+
+        /* ── Top bar ── */
+        .stats-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-eyebrow {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #ffe135;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .back-link {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #0a0a0a;
+            text-decoration: none;
+            background: #ffe135;
+            border: 3px solid #ffe135;
+            padding: 0.5rem 0.9rem;
+            box-shadow: 5px 5px 0 #ffe135aa;
+            transition: transform 0.1s, box-shadow 0.1s;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .back-link:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ffe135aa; }
+        .back-link:active { transform: translate(2px,2px);  box-shadow: 3px 3px 0 #ffe135aa; }
+
+        /* ── Big title ── */
+        .stats-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 14vw, 7rem);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            margin-bottom: 2.5rem;
+            color: #f5f0e8;
+        }
+
+        .stats-title span { color: #ffe135; }
+
+        /* ── Stat cards ── */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .stat-card {
+            border: 3px solid #ffe135;
+            padding: 1.75rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:nth-child(2) { border-left: none; }
+
+        .stat-card .s-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #ffe135;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-card .s-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 10vw, 5rem);
+            line-height: 1;
+            color: #f5f0e8;
+            word-break: break-word;
+        }
+
+        /* Yellow fill accent on first card */
+        .stat-card.accent {
+            background: #ffe135;
+        }
+        .stat-card.accent .s-label { color: #0a0a0a; }
+        .stat-card.accent .s-value { color: #0a0a0a; }
+
+        /* ── Bottom strip ── */
+        .stats-strip {
+            border: 3px solid #ffe135;
+            border-top: none;
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .strip-dot {
+            width: 10px; height: 10px;
+            background: #ffe135;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50%      { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .strip-text {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #f5f0e888;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* ── Stats deco elements ── */
+        .sdeco {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Big ghost text */
+        .sdeco-ghost {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20rem;
+            line-height: 1;
+            color: #ffe135;
+            opacity: 0.03;
+            bottom: -3vh;
+            right: -2vw;
+            letter-spacing: -0.05em;
+            white-space: nowrap;
+        }
+
+        /* Yellow filled square */
+        .sdeco-sq1 {
+            width: 80px; height: 80px;
+            background: #ffe135;
+            border: 3px solid #ffe135;
+            top: 8vh; right: 6vw;
+            opacity: 0.15;
+            transform: rotate(12deg);
+            box-shadow: 5px 5px 0 #ffe13555;
+        }
+
+        /* Outline circle */
+        .sdeco-ring {
+            width: 200px; height: 200px;
+            border: 3px solid #ffe135;
+            border-radius: 50%;
+            bottom: 8vh; left: 3vw;
+            opacity: 0.08;
+        }
+
+        /* Cross / plus mark */
+        .sdeco-cross {
+            top: 20vh; left: 6vw;
+            width: 40px; height: 40px;
+        }
+        .sdeco-cross::before,
+        .sdeco-cross::after {
+            content: '';
+            position: absolute;
+            background: #ffe135;
+            opacity: 0.3;
+        }
+        .sdeco-cross::before { width: 3px; height: 100%; left: 50%; transform: translateX(-50%); }
+        .sdeco-cross::after  { height: 3px; width: 100%; top: 50%;  transform: translateY(-50%); }
+
+        /* Small square bottom right */
+        .sdeco-sq2 {
+            width: 50px; height: 50px;
+            border: 3px solid #ffe135;
+            bottom: 15vh; right: 8vw;
+            opacity: 0.12;
+            transform: rotate(-18deg);
+        }
+
+        @media (max-width: 480px) {
+            .stats-title { font-size: 4rem; }
+            .sdeco-ghost { font-size: 12rem; }
+            .sdeco-ring  { width: 130px; height: 130px; }
+            .stat-card .s-value { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body class="stats-body">
+
+<!-- Dot grid (reused from main) -->
+<svg class="bg-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+        <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="2" fill="currentColor" opacity="0.18"/>
+        </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#dots)"/>
+</svg>
+
+<!-- Decorative elements -->
+<div class="sdeco sdeco-ghost">API</div>
+<div class="sdeco sdeco-sq1"></div>
+<div class="sdeco sdeco-ring"></div>
+<div class="sdeco sdeco-cross"></div>
+<div class="sdeco sdeco-sq2"></div>
+
+<div class="stats-page">
+
+    <div class="stats-topbar">
+        <span class="stats-eyebrow">Sunscreen Checker</span>
+        <a href="index.html" class="back-link">← Back</a>
+    </div>
+
+    <h1 class="stats-title">API<br><span>Usage</span></h1>
+
+    <div class="stats-cards">
+        <div class="stat-card accent">
+            <div class="s-label">Requests today</div>
+            <div class="s-value" id="requests">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="s-label">Remaining</div>
+            <div class="s-value" id="remaining">—</div>
+        </div>
+    </div>
+
+    <div class="stats-strip">
+        <div class="strip-dot"></div>
+        <span class="strip-text">Live data · Resets at midnight</span>
+    </div>
+
+</div>
+
+<script>
+fetch("/stats")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("requests").textContent  = data.requests.toLocaleString();
+        document.getElementById("remaining").textContent = data.remaining.toLocaleString();
+    })
+    .catch(() => {
+        document.getElementById("requests").textContent  = 'N/A';
+        document.getElementById("remaining").textContent = 'N/A';
+    });
+</script>
+
+</body>
+</html>

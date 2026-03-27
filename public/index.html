@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunscreen Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Decorative background -->
+<svg class="bg-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Grid dots -->
+    <defs>
+        <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="2" fill="currentColor" opacity="0.18"/>
+        </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#dots)"/>
+</svg>
+
+<!-- Floating neobrutalist blobs -->
+<div class="deco deco-sun">☀</div>
+<div class="deco deco-box-a"></div>
+<div class="deco deco-box-b"></div>
+<div class="deco deco-tag">SPF 50+</div>
+<div class="deco deco-circle"></div>
+<div class="deco deco-uv-text">UV</div>
+
+<div class="page">
+
+    <header class="header">
+        <h1>Sunscreen<br>Checker</h1>
+        <a href="stats.html" class="stats-link">Stats ↗</a>
+    </header>
+
+    <button class="check-btn" onclick="getUV()">
+        <span class="spinner"></span>
+        <span class="btn-text">Check UV Index</span>
+    </button>
+
+    <div id="card" class="card hidden">
+
+        <div class="uv-hero">
+            <span class="uv-number" id="uvValue">0</span>
+            <div class="uv-meta">
+                <span class="tag">UV Index</span>
+                <div class="level-label" id="levelLabel">—</div>
+            </div>
+        </div>
+
+        <div class="message-banner" id="message"></div>
+
+        <div class="bar-section">
+            <div class="bar-track">
+                <div class="bar-fill" id="uvBar"></div>
+            </div>
+            <div class="bar-ticks">
+                <span>0</span><span>3</span><span>6</span><span>8</span><span>11+</span>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Location</span>
+            <span class="value" id="city">—</span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Today's Peak</span>
+            <span class="value" id="uvMax">—</span>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
